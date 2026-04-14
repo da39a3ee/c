@@ -1,0 +1,26 @@
+name: testnew
+
+on:
+  pull_request_review:
+
+permissions:
+  contents: write
+
+jobs:
+  update-timestamp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Write timestamp to current_time
+        run: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" > current_time
+
+      - name: Push current_time
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add current_time
+          git diff --cached --quiet || git commit -m "chore: update current_time timestamp"
+          git push
