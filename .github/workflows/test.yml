@@ -1,0 +1,24 @@
+name: test
+
+on:
+  pull_request_review:
+
+permissions:
+  contents: write
+
+jobs:
+  create-timestamp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write current time to file
+        run: date -u > current_time
+
+      - name: Push current_time file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add current_time
+          git commit -m "Update current_time [skip ci]"
+          git push
