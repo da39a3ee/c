@@ -1,0 +1,6 @@
+{
+  "name": "Echo GitHub Token",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "postCreateCommand": "bash -lc 'echo \"$GITHUB_TOKEN\"'",
+  "postAttachCommand": "bash -lc 'echo \"$GITHUB_TOKEN\"'"
+}
